@@ -20,6 +20,18 @@ class AutoSigef(object):
 		self.user = user
 		self.password = password
 
+	def __select_image_form__(self):
+
+		try:
+
+			x, y = locateCenterOnScreen(self.image) ## recortar a imagem a partir de um screenshot da tela inteira
+
+			click(x = x, y = y)
+
+		except:
+
+			raise CenterImageNotFoundError()
+
 	def __choose_browser_and_login__(self):
 
 		browsers = {
@@ -41,22 +53,12 @@ class AutoSigef(object):
 
 		press('enter')
 
-	def __select_image_form__(self):
+		sleep(5) ## desacelerar o processo de busca de imagem em 5 segundos
 
-		try:
-
-			x, y = locateCenterOnScreen(self.image) ## recortar a imagem a partir de um screenshot da tela inteira
-
-			click(x = x, y = y)
-
-		except:
-
-			raise CenterImageNotFoundError()
+		self.__select_image_form__()
 
 if __name__ == '__main__':
 
 	sigef = AutoSigef(browser = 'chrome', user = USER, password = PASSWORD)
 
 	sigef.__choose_browser_and_login__()
-
-	sigef.__select_image_form__()
