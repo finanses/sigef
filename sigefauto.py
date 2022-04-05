@@ -2,21 +2,23 @@
 
 from pyautogui import PAUSE, press, write, hotkey, locateCenterOnScreen, click, doubleClick
 from time import sleep
+from credentials import USER, PASSWORD
 
 class CenterImageNotFoundError(Exception):
 	"""docstring for CenterImageNotFoundError"""
-	def __init__(self, path_image, message = 'Coordenadas centrais x e y da imagem não foram encontradas'):	
+	def __init__(self, message = 'Coordenadas centrais x e y da imagem não foram encontradas'):	
 		self.message = message
-		self.path_image = path_image
 		super().__init__(self.message)
 
 class AutoSigef(object):
 	"""docstring for AutoSigef"""
-	def __init__(self, browser: str):
+	def __init__(self, browser: str, user: str, password: str):
 		super(AutoSigef, self).__init__()
 		self.PAUSE = 1
 		self.browser = browser
 		self.image = 'images/image.png'
+		self.user = user
+		self.password = password
 
 	def __choose_browser_and_login__(self):
 
@@ -43,17 +45,17 @@ class AutoSigef(object):
 
 		try:
 
-			x, y = locateCenterOnScreen(self.image)
+			x, y = locateCenterOnScreen(self.image) ## recortar a imagem a partir de um screenshot da tela inteira
 
 			click(x = x, y = y)
 
 		except:
 
-			raise CenterImageNotFoundError(path_image = self.image)
+			raise CenterImageNotFoundError()
 
 if __name__ == '__main__':
 
-	sigef = AutoSigef(browser = 'chrome')
+	sigef = AutoSigef(browser = 'chrome', user = USER, password = PASSWORD)
 
 	sigef.__choose_browser_and_login__()
 

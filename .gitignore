@@ -130,3 +130,7 @@ dmypy.json
 
 # venv
 sigef/
+
+# secrets
+credentials.py
+
